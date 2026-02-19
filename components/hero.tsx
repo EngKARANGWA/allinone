@@ -1,6 +1,11 @@
-'use client'
+ 'use client'
 
 import { useEffect, useState } from 'react'
+import carServicesImg from './images/carservices.jpg'
+import mcImg from './images/carservices.jpg'
+import cateringImg from './images/catering.jpg'
+import camera from './images/camera.jpg'
+import mc from './images/mc.jpg'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Sparkles, Camera, Car, Mic2, Speaker, Users, Utensils } from 'lucide-react'
 
@@ -12,19 +17,19 @@ export function Hero() {
       id: 1,
       name: 'Photography',
       icon: Camera,
-      bgImage: 'https://images.unsplash.com/photo-1606216174052-a92cedc7c840?w=1200&h=800&fit=crop',
+      bgImage: camera,
     },
     {
       id: 2,
       name: 'Vehicles',
       icon: Car,
-      bgImage: 'https://images.unsplash.com/photo-1551632786-e91434bef721?w=1200&h=800&fit=crop',
+      bgImage: carServicesImg,
     },
     {
       id: 3,
       name: 'MC Services',
       icon: Mic2,
-      bgImage: 'https://images.unsplash.com/photo-1511379938547-c1f69b13d835?w=1200&h=800&fit=crop',
+      bgImage: mc,
     },
     {
       id: 4,
@@ -42,7 +47,7 @@ export function Hero() {
       id: 6,
       name: 'Catering',
       icon: Utensils,
-      bgImage: 'https://images.unsplash.com/photo-1555939594-58d7cb561482?w=1200&h=800&fit=crop',
+      bgImage: cateringImg,
     },
   ]
 
@@ -64,9 +69,17 @@ export function Hero() {
           }`}
         >
           <img
-            src={service.bgImage}
+            src={typeof service.bgImage === 'string' ? service.bgImage : service.bgImage.src}
             alt={service.name}
+            loading="lazy"
             className="w-full h-full object-cover"
+            onError={(e) => {
+              // Fallback to a simple SVG placeholder if the remote image fails to load
+              const placeholder = `data:image/svg+xml;utf8,${encodeURIComponent(
+                `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'><rect width='100%' height='100%' fill='%230b1220'/><text x='50%' y='50%' fill='%23ffffff' font-family='Arial,Helvetica,sans-serif' font-size='28' dominant-baseline='middle' text-anchor='middle'>Image unavailable</text></svg>`
+              )}`
+              e.currentTarget.src = placeholder
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/70" />
         </div>
