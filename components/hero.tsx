@@ -6,6 +6,7 @@ import mcImg from './images/carservices.jpg'
 import cateringImg from './images/catering.jpg'
 import camera from './images/camera.jpg'
 import mc from './images/mc.jpg'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Sparkles, Camera, Car, Mic2, Speaker, Users, Utensils } from 'lucide-react'
 
@@ -109,10 +110,13 @@ export function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white gap-2">
-                Browse Services
-                <ArrowRight className="w-4 h-4" />
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white gap-2" asChild>
+                <Link href="/services">
+                  Browse Services
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
               </Button>
+
               <Button size="lg" className="border-2 border-white text-white hover:bg-white/10 gap-2">
                 Learn More
               </Button>
