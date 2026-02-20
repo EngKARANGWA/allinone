@@ -1,11 +1,11 @@
- 'use client'
+"use client"
 
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { useState, useEffect } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Star, MapPin, Calendar, Users, Heart } from 'lucide-react'
 import cameraImg from '@/components/images/camera.jpg'
 import carImg from '@/components/images/carservices.jpg'
@@ -16,16 +16,17 @@ import protocal from '@/components/images/protocal.jpeg'
 
 export default function ServicesPage() {
   const [selectedCategory, setSelectedCategory] = useState<'all'|'photography'|'vehicles'|'mc'|'sound'|'catering'>('all')
-  const searchParams = useSearchParams()
   const router = useRouter()
 
   useEffect(() => {
-    const category = searchParams?.get('category')
+    if (typeof window === 'undefined') return
+    const sp = new URLSearchParams(window.location.search)
+    const category = sp.get('category')
     const allowed = ['all', 'photography', 'vehicles', 'mc', 'sound', 'catering']
     if (category && allowed.includes(category)) {
       setSelectedCategory(category as 'all'|'photography'|'vehicles'|'mc'|'sound'|'catering')
     }
-  }, [searchParams])
+  }, [])
   return (
     <main className="min-h-screen bg-background">
       <Header />
