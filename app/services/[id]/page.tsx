@@ -1,11 +1,43 @@
+"use client"
+
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
+import { Calendar } from '@/components/ui/calendar'
+import { useState } from 'react'
+import { useParams } from 'next/navigation'
+import camera from '@/components/images/camera.jpg'
+import carservices from '@/components/images/carservices.jpg'
+import catering from '@/components/images/catering.jpg'
+import dj from '@/components/images/dj.jpg'
+import plan from '@/components/images/plan.jpg'
+import protocal from '@/components/images/protocal.jpeg'
 import { Star, MapPin, Clock, Users, Heart, Share2, ChevronRight, CheckCircle2 } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export default function ServiceDetailPage({ params }: { params: { id: string } }) {
+  const [isBookingOpen, setIsBookingOpen] = useState(false)
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
+
+  const paramsHook = useParams()
+  const idStr = paramsHook?.id ?? '1'
+  const idNum = Number(idStr) || 1
+  const today = new Date()
+  const bookedDates = [
+    (() => { const d = new Date(today); d.setDate(d.getDate() + (2 + (idNum % 3))); return d })(),
+    (() => { const d = new Date(today); d.setDate(d.getDate() + (5 + (idNum % 4))); return d })(),
+  ]
+
+  const disabledDays: any = [{ before: today }, { daysOfWeek: [0, 6] }, ...bookedDates]
+
+  const handleConfirm = () => {
+    // placeholder: in a real app we'd call booking API here
+    alert(`Booked service ${idNum} on ${selectedDate?.toDateString() ?? 'no date'}`)
+    setIsBookingOpen(false)
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <Header />
@@ -16,17 +48,26 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
           <div className="lg:col-span-2">
             {/* Image Gallery */}
             <div className="mb-8">
-              <div className="relative mb-4 rounded-xl overflow-hidden bg-gradient-to-br from-primary/20 to-accent/20 aspect-video flex items-center justify-center">
-                <div className="text-6xl opacity-20">📸</div>
-              </div>
-              <div className="grid grid-cols-4 gap-3">
-                {[1, 2, 3, 4].map((i) => (
-                  <div
-                    key={i}
-                    className="aspect-square rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 cursor-pointer hover:opacity-80 transition-opacity"
-                  />
-                ))}
-              </div>
+              {(() => {
+                const imgs = [protocal, camera, carservices, catering, dj, plan]
+                const mainImg = imgs[(idNum - 1) % imgs.length]
+
+                return (
+                  <>
+                    <div className="relative mb-4 rounded-xl overflow-hidden aspect-video flex items-center justify-center bg-muted">
+                      <img src={mainImg.src ?? mainImg} alt={`Service ${idNum} main`} className="w-full h-full object-cover" />
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-3">
+                      {imgs.slice(0, 4).map((img, idx) => (
+                        <div key={idx} className="aspect-square rounded-lg overflow-hidden cursor-pointer">
+                          <img src={img.src ?? img} alt={`thumb-${idx}`} className="w-full h-full object-cover" />
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )
+              })()}
             </div>
 
             {/* Service Header */}
@@ -73,7 +114,7 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
                   <Button variant="outline" className="gap-2">
                     Contact Provider
                   </Button>
-                  <Button className="bg-primary hover:bg-primary/90 gap-2">
+                  <Button className="bg-primary hover:bg-primary/90 gap-2" onClick={() => setIsBookingOpen(true)}>
                     Book Now <ChevronRight className="w-4 h-4" />
                   </Button>
                 </div>
@@ -247,6 +288,36 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
       </div>
 
       <Footer />
+      <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Select a date to book</DialogTitle>
+            <DialogDescription>Choose an available date for this service.</DialogDescription>
+          </DialogHeader>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+            <Calendar mode="single" selected={selectedDate} onSelect={setSelectedDate} disabled={disabledDays} />
+
+            <div className="space-y-4">
+              <Card className="p-4">
+                <h4 className="font-semibold">Selected</h4>
+                <p className="text-foreground/60 mt-2">{selectedDate ? selectedDate.toDateString() : 'No date selected'}</p>
+              </Card>
+
+              <div className="space-y-2">
+                <Button onClick={handleConfirm} disabled={!selectedDate} className="w-full">
+                  Confirm Booking
+                </Button>
+                <Button variant="outline" onClick={() => setIsBookingOpen(false)} className="w-full">
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter />
+        </DialogContent>
+      </Dialog>
     </main>
   )
 }

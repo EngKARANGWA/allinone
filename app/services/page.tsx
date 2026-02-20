@@ -5,7 +5,7 @@ import { Footer } from '@/components/footer'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { useState, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { Star, MapPin, Calendar, Users, Heart } from 'lucide-react'
 import cameraImg from '@/components/images/camera.jpg'
 import carImg from '@/components/images/carservices.jpg'
@@ -17,6 +17,7 @@ import protocal from '@/components/images/protocal.jpeg'
 export default function ServicesPage() {
   const [selectedCategory, setSelectedCategory] = useState<'all'|'photography'|'vehicles'|'mc'|'sound'|'catering'>('all')
   const searchParams = useSearchParams()
+  const router = useRouter()
 
   useEffect(() => {
     const category = searchParams?.get('category')
@@ -99,7 +100,7 @@ export default function ServicesPage() {
 
                     <div className="flex items-center justify-between">
                       <div className="text-2xl font-bold text-primary">$3,000</div>
-                      <Button size="sm">Book Now</Button>
+                      <Button size="sm" onClick={() => router.push(`/services/${i}`)}>View & Book Now</Button>
                     </div>
                   </div>
                 </Card>
