@@ -1,37 +1,47 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { ChevronRight } from 'lucide-react'
+import mc from './images/mc.jpg'
+import camera from './images/camera.jpg'
+import carservices from './images/carservices.jpg'
+import catering from './images/catering.jpg'
+import dj from './images/dj.jpg'
 
 const SERVICES = [
   {
     id: 1,
     name: 'Photography',
+    category: 'photography',
     description: 'Professional photographers for your special day',
-    image: 'https://images.unsplash.com/photo-1606216174052-a92cedc7c840?w=600&h=400&fit=crop',
+    image: camera,
     providers: 150,
   },
   {
     id: 2,
     name: 'Wedding Vehicles',
+    category: 'vehicles',
     description: 'Luxury cars and limousines for transport',
-    image: 'https://images.unsplash.com/photo-1551632786-e91434bef721?w=600&h=400&fit=crop',
+    image: carservices,
     providers: 85,
   },
   {
     id: 3,
     name: 'MC Services',
+    category: 'mc',
     description: 'Professional emcees and event hosts',
-    image: 'https://images.unsplash.com/photo-1511379938547-c1f69b13d835?w=600&h=400&fit=crop',
+    image: mc,
     providers: 120,
   },
   {
     id: 4,
     name: 'Sound & Lighting',
+    category: 'sound',
     description: 'Premium audio and visual equipment',
-    image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&h=400&fit=crop',
+    image: dj,
     providers: 95,
   },
 ]
@@ -39,6 +49,7 @@ const SERVICES = [
 export function ServiceShowcase() {
   const [hoveredId, setHoveredId] = useState<number | null>(null)
   const [visibleIndices, setVisibleIndices] = useState<number[]>([])
+  const router = useRouter()
 
   useEffect(() => {
     // Animate cards in on mount
@@ -72,11 +83,12 @@ export function ServiceShowcase() {
               } hover:shadow-xl cursor-pointer group`}
               onMouseEnter={() => setHoveredId(service.id)}
               onMouseLeave={() => setHoveredId(null)}
+              onClick={() => router.push(`/services?category=${service.category}`)}
             >
               {/* Image container */}
               <div className="relative h-48 overflow-hidden bg-muted">
                 <img
-                  src={service.image}
+                  src={typeof service.image === 'string' ? service.image : service.image.src}
                   alt={service.name}
                   className={`w-full h-full object-cover transition-transform duration-500 ${
                     hoveredId === service.id ? 'scale-110' : 'scale-100'
@@ -108,6 +120,10 @@ export function ServiceShowcase() {
                       ? 'bg-primary text-primary-foreground'
                       : 'bg-primary/10 text-primary hover:bg-primary/20'
                   }`}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    router.push(`/services?category=${service.category}`)
+                  }}
                 >
                   Explore
                   <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
