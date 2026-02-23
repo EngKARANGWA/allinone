@@ -3,11 +3,14 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { BarChart3, TrendingUp, Users, ShoppingCart, AlertCircle } from 'lucide-react'
+import { SidebarProvider, SidebarInset, AdminSidebarActions } from '@/components/ui/sidebar'
 
 export default function AdminDashboardPage() {
   return (
-    <main className="min-h-screen bg-background">
-      <DashboardHeaderAdmin />
+    <SidebarProvider>
+      <AdminSidebarActions />
+      <SidebarInset>
+        <DashboardHeaderAdmin />
       
       <div className="container mx-auto px-4 py-12">
         {/* Dashboard Header */}
@@ -195,6 +198,7 @@ export default function AdminDashboardPage() {
           </TabsContent>
         </Tabs>
       </div>
-    </main>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }

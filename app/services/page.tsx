@@ -38,7 +38,8 @@ export default function ServicesPage() {
         </div>
 
         {/* Filters */}
-        <div className="mb-8 flex flex-wrap gap-2">
+        <div className="mb-8 -mx-4 px-4 sm:px-0 overflow-x-auto pb-2">
+          <div className="flex gap-2 whitespace-nowrap">
           {(
             [
               { key: 'all', label: 'All Services' },
@@ -54,14 +55,16 @@ export default function ServicesPage() {
               variant={selectedCategory === cat.key ? undefined : 'outline'}
               size="sm"
               onClick={() => setSelectedCategory(cat.key)}
+              className="whitespace-nowrap"
             >
               {cat.label}
             </Button>
           ))}
+          </div>
         </div>
 
         {/* Service Grid - Will be populated with database data */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {(() => {
             // Map categories to service indices as requested
             const mapping: Record<string, number[]> = {

@@ -43,7 +43,7 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
       <Header />
       
       <div className="container mx-auto px-4 py-12">
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2">
             {/* Image Gallery */}
@@ -54,7 +54,7 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
 
                 return (
                   <>
-                    <div className="relative mb-4 rounded-xl overflow-hidden aspect-video flex items-center justify-center bg-muted">
+                          <div className="relative mb-4 rounded-xl overflow-hidden aspect-video flex items-center justify-center bg-muted">
                       <img src={mainImg.src ?? mainImg} alt={`Service ${idNum} main`} className="w-full h-full object-cover" />
                     </div>
 
@@ -105,16 +105,16 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
               </div>
 
               {/* Price and CTA */}
-              <div className="flex items-center justify-between p-6 bg-secondary/20 rounded-xl mb-8">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 bg-secondary/20 rounded-xl mb-8">
                 <div>
                   <p className="text-sm text-foreground/60 mb-1">Starting price</p>
                   <p className="text-4xl font-bold text-primary">$5,000</p>
                 </div>
                 <div className="flex gap-2">
-                  <Button variant="outline" className="gap-2">
+                  <Button variant="outline" className="gap-2 w-full sm:w-auto">
                     Contact Provider
                   </Button>
-                  <Button className="bg-primary hover:bg-primary/90 gap-2" onClick={() => setIsBookingOpen(true)}>
+                  <Button className="bg-primary hover:bg-primary/90 gap-2 w-full sm:w-auto" onClick={() => setIsBookingOpen(true)}>
                     Book Now <ChevronRight className="w-4 h-4" />
                   </Button>
                 </div>
@@ -231,7 +231,7 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
 
           {/* Sidebar */}
           <div>
-            <Card className="p-6 sticky top-24 space-y-6">
+            <Card className="p-6 lg:sticky lg:top-24 space-y-6">
               {/* Provider Info */}
               <div className="pb-6 border-b">
                 <h3 className="font-bold mb-4">Service Provider</h3>

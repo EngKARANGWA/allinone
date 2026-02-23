@@ -3,7 +3,8 @@
 import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { VariantProps, cva } from 'class-variance-authority'
-import { PanelLeft } from 'lucide-react'
+import { PanelLeft, Home, Clock, Heart as HeartIcon, MessageSquare, Settings, User as UserIcon, ShoppingCart as ShoppingCartIcon, Users as UsersIcon, FileText, LogOut } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
@@ -742,6 +743,136 @@ const SidebarMenuSubButton = React.forwardRef<
   )
 })
 SidebarMenuSubButton.displayName = 'SidebarMenuSubButton'
+
+// Simple pre-built sidebars for common use-cases
+type SidebarItem = { href: string; label: string; icon?: React.ReactNode }
+
+export function UserSidebarActions({ className, items }: { className?: string; items?: SidebarItem[] }) {
+  const pathname = usePathname()
+  const router = useRouter()
+  const { setOpenMobile } = useSidebar()
+
+  const defaultItems: SidebarItem[] = [
+    { href: '/dashboard', label: 'Dashboard', icon: <Home /> },
+    { href: '/dashboard/bookings', label: 'Bookings', icon: <Clock /> },
+    { href: '/dashboard/favorites', label: 'Favorites', icon: <HeartIcon /> },
+    { href: '/cart', label: 'Cart', icon: <ShoppingCartIcon /> },
+    { href: '/messages', label: 'Messages', icon: <MessageSquare /> },
+    { href: '/account', label: 'Settings', icon: <Settings /> },
+  ]
+
+  const navItems = items ?? defaultItems
+
+  const handleNav = (href: string) => {
+    router.push(href)
+    // close mobile sidebar if open
+    try { setOpenMobile(false) } catch (e) {}
+  }
+
+  return (
+    <Sidebar className={className} side="left" variant="sidebar">
+      <SidebarContent>
+        <SidebarHeader>
+          <div className="flex items-center gap-3 px-2">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground font-semibold">C</div>
+            <div className="flex-1">
+              <div className="text-sm font-semibold">CeremonyHub</div>
+              <div className="text-xs text-muted-foreground">Hello, John</div>
+            </div>
+          </div>
+        </SidebarHeader>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarMenu>
+            {navItems.map((it) => (
+              <SidebarMenuItem key={it.href}>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === it.href}
+                  onClick={() => handleNav(it.href)}
+                >
+                  <button className="flex items-center gap-3 w-full">
+                    {it.icon}
+                    <span>{it.label}</span>
+                  </button>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
+
+        <SidebarFooter>
+          <Button variant="ghost" className="w-full justify-start" onClick={() => router.push('/')}>
+            <LogOut className="mr-2 h-4 w-4" />
+            Logout
+          </Button>
+        </SidebarFooter>
+      </SidebarContent>
+    </Sidebar>
+  )
+}
+
+export function AdminSidebarActions({ className, items }: { className?: string; items?: SidebarItem[] }) {
+  const pathname = usePathname()
+  const router = useRouter()
+  const { setOpenMobile } = useSidebar()
+
+  const defaultItems: SidebarItem[] = [
+    { href: '/admin/dashboard', label: 'Admin Dashboard', icon: <Home /> },
+    { href: '/admin/services', label: 'Manage Services', icon: <FileText /> },
+    { href: '/admin/providers', label: 'Manage Providers', icon: <UsersIcon /> },
+    { href: '/admin/bookings', label: 'View Bookings', icon: <Clock /> },
+    { href: '/admin/users', label: 'User Management', icon: <UserIcon /> },
+    { href: '/admin/settings', label: 'System Settings', icon: <Settings /> },
+  ]
+
+  const navItems = items ?? defaultItems
+
+  const handleNav = (href: string) => {
+    router.push(href)
+    try { setOpenMobile(false) } catch (e) {}
+  }
+
+  return (
+    <Sidebar className={className} side="left" variant="sidebar">
+      <SidebarContent>
+        <SidebarHeader>
+          <div className="flex items-center gap-3 px-2">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground font-semibold">A</div>
+            <div className="flex-1">
+              <div className="text-sm font-semibold">Admin Panel</div>
+              <div className="text-xs text-muted-foreground">System Control</div>
+            </div>
+          </div>
+        </SidebarHeader>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Management</SidebarGroupLabel>
+          <SidebarMenu>
+            {navItems.map((it) => (
+              <SidebarMenuItem key={it.href}>
+                <SidebarMenuButton asChild isActive={pathname === it.href} onClick={() => handleNav(it.href)}>
+                  <button className="flex items-center gap-3 w-full">
+                    {it.icon}
+                    <span>{it.label}</span>
+                  </button>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
+
+        <SidebarFooter>
+          <Button variant="ghost" className="w-full justify-start" onClick={() => router.push('/')}>
+            <LogOut className="mr-2 h-4 w-4" />
+            Sign Out
+          </Button>
+        </SidebarFooter>
+      </SidebarContent>
+    </Sidebar>
+  )
+}
 
 export {
   Sidebar,
