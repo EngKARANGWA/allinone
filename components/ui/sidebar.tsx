@@ -1,9 +1,10 @@
 'use client'
 
 import * as React from 'react'
+import Link from 'next/link'
 import { Slot } from '@radix-ui/react-slot'
 import { VariantProps, cva } from 'class-variance-authority'
-import { PanelLeft, Home, Clock, Heart as HeartIcon, MessageSquare, Settings, User as UserIcon, ShoppingCart as ShoppingCartIcon, Users as UsersIcon, FileText, LogOut } from 'lucide-react'
+import { PanelLeft, Home, Clock, Heart as HeartIcon, MessageSquare, Settings, User as UserIcon, ShoppingCart as ShoppingCartIcon, Users as UsersIcon, FileText, LogOut, Package, DollarSign, BarChart } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 
 import { useIsMobile } from '@/hooks/use-mobile'
@@ -754,7 +755,10 @@ export function UserSidebarActions({ className, items }: { className?: string; i
 
   const defaultItems: SidebarItem[] = [
     { href: '/dashboard', label: 'Dashboard', icon: <Home /> },
-    { href: '/dashboard/bookings', label: 'Bookings', icon: <Clock /> },
+    { href: '/dashboard/my-services', label: 'My Services', icon: <Package /> },
+    { href: '/dashboard/bookings', label: 'My Bookings', icon: <Clock /> },
+    { href: '/dashboard/payments', label: 'Payments', icon: <DollarSign /> },
+    { href: '/dashboard/reports', label: 'Reports', icon: <BarChart /> },
     { href: '/dashboard/favorites', label: 'Favorites', icon: <HeartIcon /> },
     { href: '/cart', label: 'Cart', icon: <ShoppingCartIcon /> },
     { href: '/messages', label: 'Messages', icon: <MessageSquare /> },
@@ -803,10 +807,17 @@ export function UserSidebarActions({ className, items }: { className?: string; i
         </SidebarGroup>
 
         <SidebarFooter>
-          <Button variant="ghost" className="w-full justify-start" onClick={() => router.push('/')}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Logout
-          </Button>
+            <Link href="/auth/login">
+              <Button variant="ghost" className="w-full justify-start" onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.localStorage.removeItem('isLoggedIn')
+                  window.localStorage.removeItem('userRole')
+                }
+              }}>
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </Button>
+            </Link>
         </SidebarFooter>
       </SidebarContent>
     </Sidebar>
@@ -819,12 +830,14 @@ export function AdminSidebarActions({ className, items }: { className?: string; 
   const { setOpenMobile } = useSidebar()
 
   const defaultItems: SidebarItem[] = [
-    { href: '/admin/dashboard', label: 'Admin Dashboard', icon: <Home /> },
-    { href: '/admin/services', label: 'Manage Services', icon: <FileText /> },
-    { href: '/admin/providers', label: 'Manage Providers', icon: <UsersIcon /> },
-    { href: '/admin/bookings', label: 'View Bookings', icon: <Clock /> },
-    { href: '/admin/users', label: 'User Management', icon: <UserIcon /> },
-    { href: '/admin/settings', label: 'System Settings', icon: <Settings /> },
+    { href: '/admin/dashboard', label: 'Dashboard', icon: <Home /> },
+    { href: '/admin/services', label: 'Services', icon: <FileText /> },
+    { href: '/admin/providers', label: 'Providers', icon: <UsersIcon /> },
+    { href: '/admin/bookings', label: 'Bookings', icon: <Clock /> },
+    { href: '/admin/users', label: 'Users', icon: <UserIcon /> },
+    { href: '/admin/payments', label: 'Payments', icon: <DollarSign /> },
+    { href: '/admin/reports', label: 'Reports', icon: <BarChart /> },
+    { href: '/admin/settings', label: 'Settings', icon: <Settings /> },
   ]
 
   const navItems = items ?? defaultItems
@@ -864,10 +877,17 @@ export function AdminSidebarActions({ className, items }: { className?: string; 
         </SidebarGroup>
 
         <SidebarFooter>
-          <Button variant="ghost" className="w-full justify-start" onClick={() => router.push('/')}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Sign Out
-          </Button>
+          <Link href="/auth/login">
+            <Button variant="ghost" className="w-full justify-start" onClick={() => {
+              if (typeof window !== 'undefined') {
+                window.localStorage.removeItem('isLoggedIn')
+                window.localStorage.removeItem('userRole')
+              }
+            }}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Sign Out
+            </Button>
+          </Link>
         </SidebarFooter>
       </SidebarContent>
     </Sidebar>

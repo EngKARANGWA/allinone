@@ -1,3 +1,7 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { DashboardHeaderAdmin } from '@/components/header'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -6,6 +10,23 @@ import { BarChart3, TrendingUp, Users, ShoppingCart, AlertCircle } from 'lucide-
 import { SidebarProvider, SidebarInset, AdminSidebarActions } from '@/components/ui/sidebar'
 
 export default function AdminDashboardPage() {
+  const router = useRouter()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    const loggedIn = typeof window !== 'undefined' ? window.localStorage.getItem('isLoggedIn') === 'true' : false
+    const storedRole = typeof window !== 'undefined' ? window.localStorage.getItem('userRole') : null
+    
+    if (!loggedIn || storedRole !== 'admin') {
+      router.push('/auth/login')
+      return
+    }
+    
+    setIsLoggedIn(true)
+  }, [])
+
+  if (!isLoggedIn) return null
+
   return (
     <SidebarProvider>
       <AdminSidebarActions />

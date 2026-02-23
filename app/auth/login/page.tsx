@@ -1,61 +1,79 @@
 'use client'
 
-import React, { useState } from 'react'
-import Link from 'next/link'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Card } from '@/components/ui/card'
 
 export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState('')
 
-  function handleSubmit(e: React.FormEvent) {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
-    // Dev-only hardcoded credentials
-    const ADMIN = { email: 'admin@example.com', password: 'AdminPass123!' }
-    const USER = { email: 'user@example.com', password: 'UserPass123!' }
+    setError('')
 
-    if (email === ADMIN.email && password === ADMIN.password) {
+    // Admin credentials
+    if (email === 'admin@example.com' && password === 'password123') {
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('isLoggedIn', 'true')
+        window.localStorage.setItem('userRole', 'admin')
+        window.localStorage.setItem('userEmail', email)
+      }
       router.push('/admin/dashboard')
       return
     }
 
-    if (email === USER.email && password === USER.password) {
+    // User credentials
+    if (email === 'user@example.com' && password === 'password123') {
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('isLoggedIn', 'true')
+        window.localStorage.setItem('userRole', 'user')
+        window.localStorage.setItem('userEmail', email)
+      }
       router.push('/dashboard')
       return
     }
 
-    setError('Invalid credentials — use dev credentials or sign up')
+    setError('Invalid credentials')
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-background">
-      <div className="w-full max-w-md p-8 bg-card rounded-lg shadow">
-        <h1 className="text-2xl font-bold mb-4">Sign in</h1>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <label className="block text-sm">
-            <span className="text-foreground/70">Email</span>
-            <Input value={email} onChange={(e) => setEmail(e.target.value)} type="email" required className="mt-1" />
-          </label>
-
-          <label className="block text-sm">
-            <span className="text-foreground/70">Password</span>
-            <Input value={password} onChange={(e) => setPassword(e.target.value)} type="password" required className="mt-1" />
-          </label>
-
-          <Button type="submit" className="w-full">Sign in</Button>
-          {error && <p className="text-sm text-red-600 mt-2">{error}</p>}
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <Card className="w-full max-w-md p-8">
+        <h1 className="text-3xl font-bold mb-6 text-center">Sign In</h1>
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div>
+            <Input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <Input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          {error && <p className="text-sm text-red-600">{error}</p>}
+          <Button type="submit" className="w-full">
+            Sign In
+          </Button>
+          <div className="text-xs text-muted-foreground mt-4">
+            <p>Admin: admin@example.com / password123</p>
+            <p>User: user@example.com / password123</p>
+          </div>
         </form>
-
-        <p className="text-sm text-foreground/70 mt-4">
-          Don't have an account?{' '}
-          <Link href="/auth/signup" className="text-primary hover:underline">Sign up</Link>
-        </p>
-      </div>
-    </main>
+      </Card>
+    </div>
   )
 }
