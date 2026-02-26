@@ -20,6 +20,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import MyServicesPage from '@/app/manages/myServices/my-services'
+import MyBookingsPage from '@/app/manages/mybookings/my-bookings'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar:state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -755,8 +757,8 @@ export function UserSidebarActions({ className, items }: { className?: string; i
 
   const defaultItems: SidebarItem[] = [
     { href: '/dashboard', label: 'Dashboard', icon: <Home /> },
-    { href: '/dashboard/my-services', label: 'My Services', icon: <Package /> },
-    { href: '/dashboard/bookings', label: 'My Bookings', icon: <Clock /> },
+    { href: '@/app/manages/myServices/my-services', label: 'My Services', icon: <Package /> },
+    { href: '/manages/my-bookings', label: 'My Bookings', icon: <Clock /> },
     { href: '/dashboard/payments', label: 'Payments', icon: <DollarSign /> },
     { href: '/dashboard/reports', label: 'Reports', icon: <BarChart /> },
     { href: '/dashboard/favorites', label: 'Favorites', icon: <HeartIcon /> },

@@ -58,7 +58,7 @@ export function Footer() {
 
         {/* Bottom */}
         <div className="flex flex-col md:flex-row items-center justify-between text-sm text-background/70">
-          <p>&copy; 2024 CeremonyHub. All rights reserved.</p>
+          <p>&copy; 2026 CeremonyHub. All rights reserved.</p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <Link href="#" className="hover:text-background transition-colors">Twitter</Link>
             <Link href="#" className="hover:text-background transition-colors">Facebook</Link>
