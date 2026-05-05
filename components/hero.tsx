@@ -91,25 +91,20 @@ export function Hero() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 backdrop-blur-md px-4 py-2 mb-6 animate-fade-in-up">
-              <Sparkles className="w-4 h-4 text-white" />
-              <span className="text-sm font-medium text-white">Welcome to CeremonyHub</span>
-            </div>
-
             {/* Main heading */}
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-white animate-slide-in-up" style={{ animationDelay: '0.1s' }}>
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 text-white animate-slide-in-up [animation-delay:0.1s]">
               Plan Your Perfect{' '}
               <span className="text-white">Ceremony</span>
             </h1>
 
             {/* Subheading */}
-            <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed animate-slide-in-up" style={{ animationDelay: '0.2s' }}>
+            <p className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed animate-slide-in-up [animation-delay:0.2s]">
               Discover and book professional {services[activeService].name.toLowerCase()} services and more. 
               From weddings to graduations, we connect you with the best providers.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-in-up" style={{ animationDelay: '0.3s' }}>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-in-up [animation-delay:0.3s]">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-white gap-2" asChild>
                 <Link href="/services">
                   Browse Services
@@ -123,7 +118,7 @@ export function Hero() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 mt-20 pt-12 border-t border-white/20 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+            <div className="grid grid-cols-3 gap-8 mt-20 pt-12 border-t border-white/20 animate-fade-in-up [animation-delay:0.4s]">
               <div>
                 <p className="text-3xl md:text-4xl font-bold text-white">500+</p>
                 <p className="text-sm text-white/80 mt-2">Service Providers</p>

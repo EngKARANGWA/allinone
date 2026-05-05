@@ -8,7 +8,8 @@ body {
 
 @layer utilities {
   .text-balance {
-    text-wrap: balance;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 }
 
@@ -147,6 +148,8 @@ body {
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 210 60% 90%;
     --sidebar-ring: 210 100% 50%;
+    --sidebar-width: 16rem;
+    --sidebar-width-icon: 3rem;
   }
   .dark {
     --background: 0 0% 8%;

@@ -20,6 +20,33 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 export default function ServiceDetailPage({ params }: { params: { id: string } }) {
   const [isBookingOpen, setIsBookingOpen] = useState(false)
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
+  const [reviewRating, setReviewRating] = useState(0)
+  const [reviewHover, setReviewHover] = useState(0)
+  const [reviewText, setReviewText] = useState('')
+  const [reviews, setReviews] = useState([
+    { id: 1, name: 'Sarah Smith',  date: 'March 2024', rating: 5, text: 'Absolutely amazing! Golden Lens captured our wedding day perfectly. The photographers were professional, friendly, and had a great eye for detail. Highly recommended!' },
+    { id: 2, name: 'James Mugisha', date: 'January 2024', rating: 5, text: 'Outstanding service! Every shot was perfect and they made us feel so comfortable throughout the day.' },
+    { id: 3, name: 'Alice Uwera',  date: 'December 2023', rating: 4, text: 'Very professional team. The photos came out beautifully — we will definitely book again!' },
+  ])
+  const [reviewSubmitted, setReviewSubmitted] = useState(false)
+
+  const submitReview = () => {
+    if (!reviewRating || !reviewText.trim()) return
+    setReviews((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        name: 'You',
+        date: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+        rating: reviewRating,
+        text: reviewText.trim(),
+      },
+    ])
+    setReviewRating(0)
+    setReviewText('')
+    setReviewSubmitted(true)
+    setTimeout(() => setReviewSubmitted(false), 3000)
+  }
 
   const paramsHook = useParams()
   const idStr = paramsHook?.id ?? '1'
@@ -193,27 +220,92 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
               </TabsContent>
 
               <TabsContent value="reviews" className="space-y-4">
-                {[1, 2, 3].map((i) => (
-                  <Card key={i} className="p-6">
+                {/* Existing reviews */}
+                {reviews.map((r) => (
+                  <Card key={r.id} className="p-6">
                     <div className="flex items-start justify-between mb-3">
                       <div>
-                        <h3 className="font-semibold">Sarah Smith</h3>
+                        <h3 className="font-semibold">{r.name}</h3>
                         <div className="flex items-center gap-2 mt-1">
                           <div className="flex">
                             {[1, 2, 3, 4, 5].map((j) => (
-                              <Star key={j} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                              <Star
+                                key={j}
+                                className={`w-3 h-3 ${j <= r.rating ? 'fill-yellow-400 text-yellow-400' : 'text-foreground/20'}`}
+                              />
                             ))}
                           </div>
-                          <span className="text-xs text-foreground/60">March 2024</span>
+                          <span className="text-xs text-foreground/60">{r.date}</span>
                         </div>
                       </div>
                     </div>
-                    <p className="text-foreground/70">
-                      Absolutely amazing! Golden Lens captured our wedding day perfectly. The photographers were
-                      professional, friendly, and had a great eye for detail. Highly recommended!
-                    </p>
+                    <p className="text-foreground/70">{r.text}</p>
                   </Card>
                 ))}
+
+                {/* Submit a review */}
+                <Card className="p-6 border-dashed">
+                  <h3 className="font-bold text-lg mb-4">Write a Review</h3>
+
+                  {/* Star rating picker */}
+                  <div className="mb-4">
+                    <p className="text-sm font-medium mb-2">Your Rating</p>
+                    <div className="flex gap-1">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <button
+                          key={s}
+                          type="button"
+                          onMouseEnter={() => setReviewHover(s)}
+                          onMouseLeave={() => setReviewHover(0)}
+                          onClick={() => setReviewRating(s)}
+                          className="focus:outline-none"
+                          aria-label={`Rate ${s} stars`}
+                        >
+                          <Star
+                            className={`w-7 h-7 transition-colors ${
+                              s <= (reviewHover || reviewRating)
+                                ? 'fill-yellow-400 text-yellow-400'
+                                : 'text-foreground/20'
+                            }`}
+                          />
+                        </button>
+                      ))}
+                      {reviewRating > 0 && (
+                        <span className="ml-2 text-sm text-foreground/60 self-center">
+                          {['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'][reviewRating]}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Review text */}
+                  <div className="mb-4">
+                    <p className="text-sm font-medium mb-2">Your Review</p>
+                    <textarea
+                      value={reviewText}
+                      onChange={(e) => setReviewText(e.target.value)}
+                      placeholder="Share your experience with this service..."
+                      rows={4}
+                      className="w-full border border-border rounded-md px-3 py-2 text-sm bg-background focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+                    />
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={submitReview}
+                      disabled={!reviewRating || !reviewText.trim()}
+                      className="px-4 py-2 rounded-md bg-primary text-white text-sm font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                      Submit Review
+                    </button>
+                    {reviewSubmitted && (
+                      <span className="text-sm text-green-600 flex items-center gap-1">
+                        <CheckCircle2 className="w-4 h-4" /> Review submitted!
+                      </span>
+                    )}
+                  </div>
+                </Card>
               </TabsContent>
 
               <TabsContent value="portfolio" className="space-y-4">

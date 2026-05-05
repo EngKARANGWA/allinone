@@ -43,7 +43,11 @@ export default function CartPage() {
                         <h3 className="font-semibold text-lg">{item.name}</h3>
                         <p className="text-sm text-foreground/60">{item.provider}</p>
                       </div>
-                      <button className="text-muted-foreground hover:text-foreground">
+                      <button
+                        type="button"
+                        aria-label="Remove item"
+                        className="text-muted-foreground hover:text-foreground"
+                      >
                         <X className="w-5 h-5" />
                       </button>
                     </div>
