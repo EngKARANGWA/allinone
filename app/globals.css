@@ -14,102 +14,84 @@ body {
 }
 
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
+  0%, 100% { translate: 0 0px; }
+  50%       { translate: 0 -20px; }
 }
 
 @keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
-  }
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
 }
 
 @keyframes slide-in-left {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; translate: -50px 0; }
+  to   { opacity: 1; translate: 0 0; }
 }
 
 @keyframes slide-in-right {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; translate: 50px 0; }
+  to   { opacity: 1; translate: 0 0; }
 }
 
 @keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; translate: 0 30px; }
+  to   { opacity: 1; translate: 0 0; }
 }
 
 @keyframes pulse-soft {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.8; }
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
+  from { translate: -150% 0; }
+  to   { translate: 150% 0; }
 }
 
 @layer components {
   .animate-float {
     animation: float 3s ease-in-out infinite;
+    will-change: translate;
   }
 
   .animate-glow {
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
     animation: glow 2s ease-in-out infinite;
+    will-change: opacity;
   }
 
   .animate-slide-in-left {
-    animation: slide-in-left 0.6s ease-out;
+    animation: slide-in-left 0.6s ease-out both;
+    will-change: opacity, translate;
   }
 
   .animate-slide-in-right {
-    animation: slide-in-right 0.6s ease-out;
+    animation: slide-in-right 0.6s ease-out both;
+    will-change: opacity, translate;
   }
 
   .animate-fade-in-up {
-    animation: fade-in-up 0.6s ease-out;
+    animation: fade-in-up 0.6s ease-out both;
+    will-change: opacity, translate;
   }
 
   .animate-pulse-soft {
     animation: pulse-soft 2s ease-in-out infinite;
+    will-change: opacity;
   }
 
   .animate-shimmer {
-    animation: shimmer 2s infinite;
-    background-size: 1000px 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .animate-shimmer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    animation: shimmer 1.6s ease-in-out infinite;
+    will-change: translate;
   }
 }
 
@@ -148,7 +130,7 @@ body {
     --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 210 60% 90%;
     --sidebar-ring: 210 100% 50%;
-    --sidebar-width: 16rem;
+    --sidebar-width: 13rem;
     --sidebar-width-icon: 3rem;
   }
   .dark {
@@ -193,5 +175,9 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+  [data-sidebar-provider] {
+    --sidebar-width: 13rem;
+    --sidebar-width-icon: 3rem;
   }
 }

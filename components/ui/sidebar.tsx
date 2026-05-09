@@ -25,8 +25,8 @@ import MyBookingsPage from '@/app/manages/mybookings/my-bookings'
 
 const SIDEBAR_COOKIE_NAME = 'sidebar:state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
-const SIDEBAR_WIDTH = '16rem'
-const SIDEBAR_WIDTH_MOBILE = '18rem'
+const SIDEBAR_WIDTH = '13rem'
+const SIDEBAR_WIDTH_MOBILE = '15rem'
 const SIDEBAR_WIDTH_ICON = '3rem'
 const SIDEBAR_KEYBOARD_SHORTCUT = 'b'
 
@@ -65,7 +65,6 @@ const SidebarProvider = React.forwardRef<
       open: openProp,
       onOpenChange: setOpenProp,
       className,
-      style: _style,
       children,
       ...props
     },
@@ -145,6 +144,7 @@ const SidebarProvider = React.forwardRef<
       <SidebarContext.Provider value={contextValue}>
         <TooltipProvider delayDuration={0}>
           <div
+            data-sidebar-provider=""
             className={cn(
               'group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar',
               className,
@@ -817,7 +817,7 @@ export function AdminSidebarActions({ className, items }: { className?: string; 
 
   const defaultItems: SidebarItem[] = [
     { href: '/admin/dashboard', label: 'Dashboard', icon: <Home /> },
-    { href: '/admin/services', label: 'Services', icon: <FileText /> },
+    { href: '/admin/services', label: 'Services', icon: <Package /> },
     { href: '/admin/providers', label: 'Providers', icon: <UsersIcon /> },
     { href: '/admin/bookings', label: 'Bookings', icon: <Clock /> },
     { href: '/admin/users', label: 'Users', icon: <UserIcon /> },

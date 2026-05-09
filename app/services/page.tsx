@@ -12,23 +12,9 @@ import { CategoryFilter } from '@/components/services/category-filter'
 import { ServiceFilterPanel } from '@/components/services/service-filter-panel'
 import { useServiceFilters } from '@/hooks/use-service-filters'
 import { CATEGORIES, Category } from '@/components/services/types'
-import cameraImg from '@/components/images/camera.jpg'
-import carImg from '@/components/images/carservices.jpg'
-import cateringImg from '@/components/images/catering.jpg'
-import dj from '@/components/images/dj.jpg'
-import plan from '@/components/images/plan.jpg'
-import protocal from '@/components/images/protocal.jpeg'
+import { ALL_SERVICES } from '@/lib/services-data'
 
 const LOCATIONS = ['All Locations', 'Downtown', 'Kigali City', 'Kimironko', 'Remera', 'Nyamirambo']
-
-const ALL_SERVICES = [
-  { id: 1, name: 'MC & Events',       provider: 'EventPro Rwanda',    category: 'mc',          img: protocal,   price: 2500, location: 'Downtown',   availability: 'available', rating: 4.9, reviews: 87  },
-  { id: 2, name: 'Photography',        provider: 'Golden Lens Studio', category: 'photography', img: cameraImg,  price: 5000, location: 'Kigali City', availability: 'available', rating: 4.8, reviews: 120 },
-  { id: 3, name: 'Wedding Vehicles',   provider: 'LuxRide Rwanda',     category: 'vehicles',    img: carImg,     price: 1200, location: 'Remera',      availability: 'limited',   rating: 4.7, reviews: 54  },
-  { id: 4, name: 'Catering Services',  provider: 'Taste of Rwanda',    category: 'catering',    img: cateringImg, price: 3000, location: 'Kimironko',  availability: 'available', rating: 4.6, reviews: 203 },
-  { id: 5, name: 'Sound & Lighting',   provider: 'SoundWave Pro',      category: 'sound',       img: dj,         price: 1800, location: 'Nyamirambo',  availability: 'available', rating: 4.5, reviews: 66  },
-  { id: 6, name: 'Event Planning',     provider: 'PlanIt Events',      category: 'mc',          img: plan,       price: 4000, location: 'Downtown',   availability: 'booked',    rating: 4.9, reviews: 158 },
-]
 
 const AVAILABILITY_COLOR: Record<string, string> = {
   available: 'bg-green-100 text-green-700',
@@ -119,7 +105,7 @@ export default function ServicesPage() {
                   <div className="flex items-center gap-2 mb-3">
                     <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                     <span className="font-semibold">{s.rating}</span>
-                    <span className="text-sm text-foreground/60">({s.reviews} reviews)</span>
+                    <span className="text-sm text-foreground/60">({s.reviewCount} reviews)</span>
                   </div>
                   <div className="flex items-center gap-1 text-sm text-foreground/60 mb-4">
                     <MapPin className="w-4 h-4" />
