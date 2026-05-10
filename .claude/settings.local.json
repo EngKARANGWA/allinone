@@ -1,10 +1,19 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir -p \"c:/Users/USER/Desktop/allinone/app/admin/services/[id]\")"
+      "Bash(mkdir -p \"c:/Users/USER/Desktop/allinone/app/admin/services/[id]\")",
+      "Bash(mkdir -p \"c:\\\\Users\\\\USER\\\\Desktop\\\\allinone\\\\app\\\\admin\\\\providers\\\\[id]\" 2>/dev/null; echo \"done\")",
+      "Bash(npx tsc *)",
+      "Bash(mkdir -p \"c:\\\\Users\\\\USER\\\\Desktop\\\\allinone\\\\app\\\\admin\\\\bookings\\\\[id]\" 2>/dev/null; echo \"done\")",
+      "Bash(mkdir -p \"c:\\\\Users\\\\USER\\\\Desktop\\\\allinone\\\\app\\\\admin\\\\users\\\\[id]\" 2>/dev/null; echo \"done\")",
+      "Bash(mkdir -p \"c:\\\\Users\\\\USER\\\\Desktop\\\\allinone\\\\app\\\\admin\\\\payments\\\\[id]\" 2>/dev/null; echo \"done\")"
     ],
     "additionalDirectories": [
-      "c:\\Users\\USER\\Desktop\\allinone\\app\\admin\\services"
+      "c:\\Users\\USER\\Desktop\\allinone\\app\\admin\\services",
+      "c:\\Users\\USER\\Desktop\\allinone\\app\\admin\\providers",
+      "c:\\Users\\USER\\Desktop\\allinone\\app\\admin\\bookings",
+      "c:\\Users\\USER\\Desktop\\allinone\\app\\admin\\users",
+      "c:\\Users\\USER\\Desktop\\allinone\\app\\admin\\payments"
     ]
   }
 }

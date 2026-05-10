@@ -61,7 +61,7 @@ export function ServiceShowcase() {
   }, [])
 
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section className="pt-16 md:pt-24 pb-0 bg-white">
       <div className="container mx-auto px-4">
         {/* Section header */}
         <div className="text-center mb-12">

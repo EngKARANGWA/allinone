@@ -4,6 +4,12 @@ import { useEffect, useState } from 'react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Heart, MapPin, Star, Sparkles } from 'lucide-react'
+import cameraImg   from '@/components/images/camera.jpg'
+import carImg      from '@/components/images/carservices.jpg'
+import protocalImg from '@/components/images/protocal.jpeg'
+import djImg       from '@/components/images/dj.jpg'
+import planImg     from '@/components/images/plan.jpg'
+import cateringImg from '@/components/images/catering.jpg'
 
 const MOCK_SERVICES = [
   {
@@ -14,7 +20,7 @@ const MOCK_SERVICES = [
     price: 5000,
     rating: 4.9,
     reviews: 128,
-    image: 'https://images.unsplash.com/photo-1606216174052-a92cedc7c840?w=400&h=300&fit=crop',
+    image: cameraImg.src,
     location: 'Downtown',
     description: 'Professional wedding photography with drone coverage',
     badge: 'Featured',
@@ -27,7 +33,7 @@ const MOCK_SERVICES = [
     price: 2500,
     rating: 4.8,
     reviews: 95,
-    image: 'https://images.unsplash.com/photo-1551632786-e91434bef721?w=400&h=300&fit=crop',
+    image: carImg.src,
     location: 'City Wide',
     description: 'Luxury limousine service for your special day',
     badge: 'Popular',
@@ -40,7 +46,7 @@ const MOCK_SERVICES = [
     price: 3000,
     rating: 4.7,
     reviews: 156,
-    image: 'https://images.unsplash.com/photo-1511379938547-c1f69b13d835?w=400&h=300&fit=crop',
+    image: protocalImg.src,
     location: 'Downtown',
     description: 'Energetic and professional master of ceremonies',
     badge: 'Trending',
@@ -53,7 +59,7 @@ const MOCK_SERVICES = [
     price: 4000,
     rating: 4.6,
     reviews: 112,
-    image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&h=300&fit=crop',
+    image: djImg.src,
     location: 'City Wide',
     description: 'State-of-the-art audio and lighting equipment',
   },
@@ -65,7 +71,7 @@ const MOCK_SERVICES = [
     price: 3500,
     rating: 4.9,
     reviews: 187,
-    image: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=400&h=300&fit=crop',
+    image: planImg.src,
     location: 'Downtown',
     description: 'Full event planning and coordination services',
     badge: 'Award Winner',
@@ -78,7 +84,7 @@ const MOCK_SERVICES = [
     price: 6000,
     rating: 4.8,
     reviews: 203,
-    image: 'https://images.unsplash.com/photo-1555939594-58d7cb561482?w=400&h=300&fit=crop',
+    image: cateringImg.src,
     location: 'City Wide',
     description: 'Elegant catering for ceremonies of all sizes',
   },
@@ -105,14 +111,10 @@ export function ServicesCatalogEnhanced() {
   }
 
   return (
-    <section id="services" className="py-16 md:py-24 bg-gradient-to-b from-secondary/30 to-white">
+    <section id="services" className="pt-8 md:pt-10 pb-16 md:pb-24 bg-gradient-to-b from-secondary/30 to-white">
       <div className="container mx-auto px-4">
         {/* Section header with animation */}
         <div className="mb-12 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 mb-6 animate-fade-in-up">
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Our Featured Services</span>
-          </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-fade-in-up">
             Browse Our Premium Services
           </h2>
@@ -158,6 +160,8 @@ export function ServicesCatalogEnhanced() {
                 {/* Badge and heart button */}
                 <div className="absolute top-3 right-3 flex gap-2">
                   <button
+                    type="button"
+                    aria-label={favorites.includes(service.id) ? 'Remove from wishlist' : 'Add to wishlist'}
                     onClick={(e) => {
                       e.stopPropagation()
                       toggleFavorite(service.id)

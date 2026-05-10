@@ -44,7 +44,7 @@ const FEATURES = [
 
 export function AnimatedFeatures() {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-background to-secondary/30">
+    <section className="pt-8 md:pt-10 pb-16 md:pb-24 bg-gradient-to-b from-background to-secondary/30">
       <div className="container mx-auto px-4">
         {/* Section header */}
         <div className="text-center mb-16">

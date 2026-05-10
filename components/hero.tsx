@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import carServicesImg from './images/carservices.jpg'
-import mcImg from './images/carservices.jpg'
 import cateringImg from './images/catering.jpg'
 import camera from './images/camera.jpg'
 import mc from './images/mc.jpg'
+import djImg from './images/dj.jpg'
+import planImg from './images/plan.jpg'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Sparkles, Camera, Car, Mic2, Speaker, Users, Utensils } from 'lucide-react'
@@ -36,13 +37,13 @@ export function Hero() {
       id: 4,
       name: 'Sound & Lighting',
       icon: Speaker,
-      bgImage: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1200&h=800&fit=crop',
+      bgImage: djImg,
     },
     {
       id: 5,
       name: 'Coordination',
       icon: Users,
-      bgImage: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=1200&h=800&fit=crop',
+      bgImage: planImg,
     },
     {
       id: 6,

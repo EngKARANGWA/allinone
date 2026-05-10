@@ -28,7 +28,7 @@ const FEATURES = [
 
 export function Features() {
   return (
-    <section id="how-it-works" className="py-16 md:py-24">
+    <section id="how-it-works" className="pt-8 md:pt-10 pb-16 md:pb-24">
       <div className="container mx-auto px-4">
         {/* Section header */}
         <div className="mb-12 text-center">
